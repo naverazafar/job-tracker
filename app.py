@@ -108,4 +108,4 @@ def update_status(job_id):
     return jsonify({"success": False}), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000,debug=True)
