@@ -1,3 +1,5 @@
+![CI](https://github.com/naverazafar/job-tracker/actions/workflows/python-app.yml/badge.svg)
+
 # JobTrack — Job Application Tracker
 
 A Flask-based job tracking application that allows users to store, update, and manage job applications with status tracking and notes.
