@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "company": "Stripe",
+    "role": "Senior Software Engineer",
+    "location": "Remote (Canada)",
+    "salary": "$160k-$190k",
+    "url": "https://stripe.com/jobs",
+    "status": "Interview",
+    "notes": "2nd round scheduled for next Tuesday. Technical + system design.",
+    "date_added": "2026-06-01",
+    "date_updated": "2026-06-21"
+  },
+  {
+    "id": 2,
+    "company": "Shopify",
+    "role": "Staff Engineer",
+    "location": "Ottawa, ON (Hybrid)",
+    "salary": "$175k+",
+    "url": "https://shopify.com/careers",
+    "status": "Phone Screen",
+    "notes": "Initial call with recruiter Sarah went well.",
+    "date_added": "2026-06-08",
+    "date_updated": "2026-06-12"
+  },
+  {
+    "id": 3,
+    "company": "Vercel",
+    "role": "Frontend Engineer",
+    "location": "Remote",
+    "salary": "$140k-$165k",
+    "url": "https://vercel.com/careers",
+    "status": "Applied",
+    "notes": "",
+    "date_added": "2026-06-10",
+    "date_updated": "2026-06-21"
+  },
+  {
+    "id": 4,
+    "company": "Linear",
+    "role": "Product Engineer",
+    "location": "Remote",
+    "salary": "",
+    "url": "https://linear.app/careers",
+    "status": "Saved",
+    "notes": "Great product, small team. Reach out to @karri on Twitter first.",
+    "date_added": "2026-06-14",
+    "date_updated": "2026-06-14"
+  },
+  {
+    "id": 5,
+    "company": "Notion",
+    "role": "Full Stack Engineer",
+    "location": "San Francisco, CA",
+    "salary": "$180k",
+    "url": "https://notion.so/careers",
+    "status": "Rejected",
+    "notes": "Didn't pass the take-home. Feedback: needs more backend depth.",
+    "date_added": "2026-05-20",
+    "date_updated": "2026-06-05"
+  }
+]

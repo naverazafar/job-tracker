@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Application — JobTrack{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <div class="form-header">
+    <a href="{{ url_for('index') }}" class="back-link">← Back to Dashboard</a>
+    <h1>{{ action }} Application</h1>
+  </div>
+
+  <form method="post" class="job-form">
+    <div class="form-grid">
+
+      <div class="form-group required">
+        <label for="company">Company</label>
+        <input type="text" id="company" name="company" required
+               placeholder="e.g. Acme Corp"
+               value="{{ job.company if job else '' }}">
+      </div>
+
+      <div class="form-group required">
+        <label for="role">Role / Title</label>
+        <input type="text" id="role" name="role" required
+               placeholder="e.g. Senior Software Engineer"
+               value="{{ job.role if job else '' }}">
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location"
+               placeholder="e.g. Vancouver, BC (Remote)"
+               value="{{ job.location if job else '' }}">
+      </div>
+
+      <div class="form-group">
+        <label for="salary">Salary / Comp</label>
+        <input type="text" id="salary" name="salary"
+               placeholder="e.g. $120k–$150k"
+               value="{{ job.salary if job else '' }}">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="url">Job Posting URL</label>
+        <input type="url" id="url" name="url"
+               placeholder="https://..."
+               value="{{ job.url if job else '' }}">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status" class="form-select">
+          {% for s in statuses %}
+          <option value="{{ s }}" {% if job and job.status == s %}selected{% elif not job and s == 'Saved' %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" rows="4"
+                  placeholder="Recruiter name, interview details, impressions…">{{ job.notes if job else '' }}</textarea>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('index') }}" class="btn btn-ghost">Cancel</a>
+      <button type="submit" class="btn btn-primary">{{ action }} Application</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

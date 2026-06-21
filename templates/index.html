@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — JobTrack{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <a href="{{ url_for('index') }}" class="stat-card {% if not active_status %}active{% endif %}">
+      <span class="stat-number">{{ counts['All'] }}</span>
+      <span class="stat-label">Total</span>
+    </a>
+    {% for s in statuses %}
+    <a href="{{ url_for('index', status=s) }}" class="stat-card stat-{{ s|lower|replace(' ', '-') }} {% if active_status == s %}active{% endif %}">
+      <span class="stat-number">{{ counts[s] }}</span>
+      <span class="stat-label">{{ s }}</span>
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- Search + Filter Bar -->
+  <div class="toolbar">
+    <form class="search-form" method="get" action="{{ url_for('index') }}">
+      {% if active_status %}
+        <input type="hidden" name="status" value="{{ active_status }}">
+      {% endif %}
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input
+          type="text"
+          name="search"
+          placeholder="Search company, role, or notes…"
+          value="{{ search }}"
+          class="search-input"
+        />
+        {% if search %}
+        <a href="{{ url_for('index', status=active_status) }}" class="clear-search">✕</a>
+        {% endif %}
+      </div>
+    </form>
+
+    {% if active_status %}
+    <div class="active-filter">
+      Showing: <strong>{{ active_status }}</strong>
+      <a href="{{ url_for('index', search=search) }}" class="filter-clear">clear ✕</a>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Job Table -->
+  {% if jobs %}
+  <div class="table-wrap">
+    <table class="job-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Role</th>
+          <th>Location</th>
+          <th>Salary</th>
+          <th>Status</th>
+          <th>Added</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr class="job-row" data-id="{{ job.id }}">
+          <td class="td-company">
+            {% if job.url %}
+              <a href="{{ job.url }}" target="_blank" class="company-link">{{ job.company }}</a>
+            {% else %}
+              {{ job.company }}
+            {% endif %}
+          </td>
+          <td class="td-role">{{ job.role }}</td>
+          <td class="td-location">{{ job.location or '—' }}</td>
+          <td class="td-salary">{{ job.salary or '—' }}</td>
+          <td class="td-status">
+            <select class="status-select status-{{ job.status|lower|replace(' ', '-') }}" onchange="updateStatus({{ job.id }}, this.value, this)">
+              {% for s in statuses %}
+              <option value="{{ s }}" {% if job.status == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td class="td-date">{{ job.date_added }}</td>
+          <td class="td-actions">
+            <a href="{{ url_for('edit_job', job_id=job.id) }}" class="btn-icon btn-edit" title="Edit">✎</a>
+            <form method="post" action="{{ url_for('delete_job', job_id=job.id) }}" onsubmit="return confirm('Delete {{ job.company }} – {{ job.role }}?')">
+              <button type="submit" class="btn-icon btn-delete" title="Delete">✕</button>
+            </form>
+          </td>
+        </tr>
+        {% if job.notes %}
+        <tr class="notes-row">
+          <td colspan="7"><span class="notes-label">Note:</span> {{ job.notes }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <h2>No applications yet{% if active_status or search %} matching this filter{% endif %}</h2>
+    <p>{% if active_status or search %}Try clearing the filter, or {% endif %}start tracking your job search.</p>
+    <a href="{{ url_for('add_job') }}" class="btn btn-primary">Add your first application</a>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+async function updateStatus(jobId, newStatus, selectEl) {
+  selectEl.className = 'status-select status-' + newStatus.toLowerCase().replace(/ /g, '-');
+  const res = await fetch(`/update_status/${jobId}`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({status: newStatus})
+  });
+  if (!res.ok) {
+    alert('Failed to update status');
+    location.reload();
+  }
+}
+</script>
+{% endblock %}
