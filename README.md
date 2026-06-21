@@ -1,6 +1,6 @@
 # JobTrack — Job Application Tracker
 
-A minimal, beautiful Flask app to track your job search.
+A Flask-based job tracking application that allows users to store, update, and manage job applications with status tracking and notes.
 
 ## Features
 - Add, edit, and delete job applications
@@ -9,6 +9,19 @@ A minimal, beautiful Flask app to track your job search.
 - Filter by status with one click; search across company, role, and notes
 - Live stats bar showing counts by stage
 - Data stored locally in `jobs.json` (no database needed)
+
+## Tech Stack
+- Python
+- Flask
+- JSON (data storage)
+- HTML/CSS
+
+## Screenshots
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+![Add job](screenshots/add.png)
+![Status Filter](screenshots/filter.png)
 
 ## Setup
 
@@ -32,9 +45,10 @@ job-tracker/
 ├── requirements.txt
 ├── static/
 │   └── css/
-│       └── style.css   # Monochromatic green theme
+│       └── style.css   # Green theme styling
 └── templates/
     ├── base.html       # Shared layout
     ├── index.html      # Dashboard
     └── form.html       # Add / Edit form
 ```
+
